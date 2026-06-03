@@ -1,2 +1,0 @@
-# aiviti
-aiviti adalah sandbox
