@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kedai Kopi KULO — Kopi Enak, Harga Oke</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --cream: #F5EFE0;
+    --cream-dark: #EDE3CC;
+    --brown: #3B1F0A;
+    --brown-mid: #6B3A1F;
+    --brown-light: #A0613A;
+    --amber: #D4822A;
+    --amber-light: #F0A94E;
+    --white: #FDFAF4;
+    --text: #1E0E04;
+    --text-muted: #7A5840;
+    --green: #2D4A2A;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* ---- NAV ---- */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.2rem 3rem;
+    background: rgba(245,239,224,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(59,31,10,0.08);
+    transition: all 0.3s;
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem; font-weight: 900;
+    letter-spacing: -0.5px;
+    color: var(--brown);
+  }
+  .nav-logo span { color: var(--amber); }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.9rem; font-weight: 500; letter-spacing: 0.5px;
+    color: var(--brown-mid); text-decoration: none; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--amber); }
+  .nav-cta {
+    background: var(--brown);
+    color: var(--cream) !important;
+    padding: 0.55rem 1.4rem;
+    border-radius: 100px;
+    font-size: 0.85rem !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--amber) !important; color: var(--white) !important; }
+
+  /* ---- HERO ---- */
+  #hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 8rem 3rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(ellipse 60% 60% at 80% 40%, rgba(212,130,42,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 50% at 20% 70%, rgba(59,31,10,0.07) 0%, transparent 60%);
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--brown); color: var(--cream);
+    font-size: 0.78rem; font-weight: 600; letter-spacing: 1.5px;
+    text-transform: uppercase; padding: 0.45rem 1rem;
+    border-radius: 100px; margin-bottom: 1.5rem;
+  }
+  .hero-badge::before {
+    content: '☕'; font-size: 0.85rem;
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5rem);
+    font-weight: 900; line-height: 1.05;
+    color: var(--brown);
+    margin-bottom: 1.5rem;
+  }
+  .hero-title em {
+    font-style: italic; color: var(--amber);
+  }
+  .hero-desc {
+    font-size: 1.1rem; font-weight: 300; line-height: 1.8;
+    color: var(--brown-mid); max-width: 480px;
+    margin-bottom: 2.5rem;
+  }
+  .hero-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--brown);
+    color: var(--cream); border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 600;
+    padding: 0.9rem 2rem; border-radius: 100px;
+    text-decoration: none; display: inline-block;
+    transition: background 0.25s, transform 0.15s;
+  }
+  .btn-primary:hover { background: var(--amber); transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--brown);
+    border: 1.5px solid var(--brown-mid);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 500;
+    padding: 0.9rem 2rem; border-radius: 100px;
+    text-decoration: none; display: inline-block;
+    transition: all 0.25s;
+  }
+  .btn-outline:hover { background: var(--brown); color: var(--cream); }
+
+  .hero-stats {
+    display: flex; gap: 2.5rem; margin-top: 3rem;
+    padding-top: 2rem; border-top: 1px solid rgba(59,31,10,0.12);
+  }
+  .hero-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem; font-weight: 700; color: var(--brown);
+    display: block;
+  }
+  .hero-stat-label {
+    font-size: 0.8rem; font-weight: 500; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+
+  .hero-visual {
+    position: relative; display: flex;
+    align-items: center; justify-content: center;
+  }
+  .hero-cup-wrapper {
+    width: 380px; height: 380px;
+    background: var(--brown);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+    animation: float 4s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-16px); }
+  }
+  .hero-cup-svg { width: 220px; }
+
+  .floating-tag {
+    position: absolute;
+    background: var(--white);
+    border-radius: 16px;
+    padding: 0.75rem 1rem;
+    box-shadow: 0 8px 32px rgba(59,31,10,0.12);
+    font-size: 0.85rem; font-weight: 500;
+    white-space: nowrap;
+    animation: floatTag 5s ease-in-out infinite;
+  }
+  .floating-tag:nth-child(2) { top: 10%; right: -8%; animation-delay: -1s; }
+  .floating-tag:nth-child(3) { bottom: 20%; left: -10%; animation-delay: -2.5s; }
+  .floating-tag:nth-child(4) { top: 50%; right: -12%; animation-delay: -3.5s; }
+  @keyframes floatTag {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+  .tag-dot {
+    display: inline-block; width: 8px; height: 8px;
+    border-radius: 50%; margin-right: 6px;
+    background: var(--amber);
+  }
+
+  /* ---- MARQUEE ---- */
+  .marquee-section {
+    background: var(--brown);
+    padding: 1rem 0; overflow: hidden;
+    display: flex; gap: 0;
+  }
+  .marquee-track {
+    display: flex; gap: 3rem;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .marquee-track2 { animation-delay: -10s; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-100%); }
+  }
+  .marquee-item {
+    color: var(--cream); font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.5px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .marquee-item::after { content: '✦'; color: var(--amber); font-size: 0.7rem; }
+
+  /* ---- MENU SECTION ---- */
+  #menu {
+    padding: 6rem 3rem;
+  }
+  .section-header { text-align: center; margin-bottom: 4rem; }
+  .section-eyebrow {
+    display: inline-block;
+    font-size: 0.78rem; font-weight: 600;
+    letter-spacing: 2px; text-transform: uppercase;
+    color: var(--amber); margin-bottom: 0.75rem;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900; color: var(--brown);
+    line-height: 1.1;
+  }
+
+  .menu-tabs {
+    display: flex; justify-content: center; gap: 0.5rem;
+    margin-bottom: 3rem; flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 0.55rem 1.4rem;
+    border-radius: 100px;
+    border: 1.5px solid rgba(59,31,10,0.2);
+    background: transparent;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem; font-weight: 500;
+    color: var(--brown-mid);
+    cursor: pointer; transition: all 0.2s;
+  }
+  .tab-btn:hover, .tab-btn.active {
+    background: var(--brown); color: var(--cream);
+    border-color: var(--brown);
+  }
+
+  .menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .menu-card {
+    background: var(--white);
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(59,31,10,0.06);
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+  .menu-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 48px rgba(59,31,10,0.12);
+  }
+  .menu-card-img {
+    width: 100%; height: 200px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 4rem; position: relative;
+    overflow: hidden;
+  }
+  .menu-card-body { padding: 1.25rem; }
+  .menu-card-name {
+    font-weight: 600; font-size: 1.05rem;
+    color: var(--brown); margin-bottom: 0.4rem;
+  }
+  .menu-card-desc {
+    font-size: 0.85rem; color: var(--text-muted);
+    line-height: 1.6; margin-bottom: 1rem;
+  }
+  .menu-card-footer {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .menu-price {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem; font-weight: 700; color: var(--amber);
+  }
+  .menu-badge {
+    font-size: 0.72rem; font-weight: 600; letter-spacing: 0.5px;
+    padding: 0.25rem 0.75rem; border-radius: 100px;
+    text-transform: uppercase;
+  }
+  .badge-bestseller { background: #FFF0D9; color: #9A5C0A; }
+  .badge-new { background: #D9F0E8; color: #1A6644; }
+  .badge-seasonal { background: #F0D9E8; color: #6A1A44; }
+
+  /* ---- ABOUT ---- */
+  #about {
+    padding: 6rem 3rem;
+    background: var(--brown);
+    color: var(--cream);
+    position: relative; overflow: hidden;
+  }
+  #about::before {
+    content: '';
+    position: absolute; top: -100px; right: -100px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(212,130,42,0.15);
+    pointer-events: none;
+  }
+  .about-inner {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 5rem; align-items: center;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .about-eyebrow { color: var(--amber-light); }
+  .about-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3vw, 2.8rem);
+    font-weight: 700; line-height: 1.2;
+    color: var(--cream); margin-bottom: 1.5rem;
+  }
+  .about-title em { font-style: italic; color: var(--amber-light); }
+  .about-text {
+    font-size: 1rem; line-height: 1.9;
+    color: rgba(245,239,224,0.75);
+    margin-bottom: 2rem;
+  }
+  .about-features { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .about-feat {
+    display: flex; gap: 0.75rem; align-items: flex-start;
+  }
+  .feat-icon {
+    width: 40px; height: 40px; flex-shrink: 0;
+    border-radius: 10px;
+    background: rgba(212,130,42,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .feat-text strong { display: block; font-size: 0.9rem; font-weight: 600; color: var(--cream); margin-bottom: 0.2rem; }
+  .feat-text span { font-size: 0.8rem; color: rgba(245,239,224,0.55); }
+
+  .about-visual {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .about-img-card {
+    border-radius: 16px;
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 1.5rem;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; min-height: 180px;
+    transition: background 0.3s;
+  }
+  .about-img-card:hover { background: rgba(255,255,255,0.1); }
+  .about-img-card:first-child { grid-column: span 2; }
+  .about-img-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .about-img-label { font-size: 0.85rem; font-weight: 500; color: var(--cream-dark); }
+
+  /* ---- TESTIMONIALS ---- */
+  #testimonials { padding: 6rem 3rem; }
+  .testi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem; max-width: 1100px; margin: 3rem auto 0;
+  }
+  .testi-card {
+    background: var(--white);
+    border-radius: 20px; padding: 2rem;
+    border: 1px solid rgba(59,31,10,0.06);
+    position: relative;
+  }
+  .testi-quote {
+    font-size: 3rem; line-height: 1;
+    color: var(--amber); margin-bottom: 0.75rem;
+    font-family: 'Playfair Display', serif;
+  }
+  .testi-text {
+    font-size: 0.95rem; line-height: 1.7;
+    color: var(--brown-mid); margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+  .testi-author { display: flex; align-items: center; gap: 0.75rem; }
+  .testi-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: var(--cream-dark);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.9rem; color: var(--brown-mid);
+  }
+  .testi-name { font-weight: 600; font-size: 0.9rem; color: var(--brown); }
+  .testi-role { font-size: 0.78rem; color: var(--text-muted); }
+  .testi-stars { margin-bottom: 0.5rem; color: var(--amber); letter-spacing: 2px; }
+
+  /* ---- LOCATION ---- */
+  #location {
+    padding: 6rem 3rem;
+    background: var(--cream-dark);
+  }
+  .location-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1.2fr; gap: 4rem; align-items: center;
+  }
+  .location-info { }
+  .loc-item {
+    display: flex; gap: 1rem; align-items: flex-start;
+    margin-bottom: 1.5rem; padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(59,31,10,0.1);
+  }
+  .loc-item:last-child { border-bottom: none; }
+  .loc-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    border-radius: 12px; background: var(--brown);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.1rem;
+  }
+  .loc-label { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--text-muted); margin-bottom: 0.3rem; }
+  .loc-value { font-size: 0.95rem; font-weight: 500; color: var(--brown); line-height: 1.5; }
+
+  .map-placeholder {
+    border-radius: 20px; overflow: hidden;
+    background: var(--brown);
+    height: 350px; position: relative;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; color: rgba(245,239,224,0.5);
+    flex-direction: column; gap: 0.5rem;
+  }
+  .map-pin {
+    font-size: 3rem;
+    animation: bounce 2s ease-in-out infinite;
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  /* ---- CTA SECTION ---- */
+  #cta {
+    padding: 6rem 3rem;
+    text-align: center;
+  }
+  .cta-inner {
+    max-width: 700px; margin: 0 auto;
+  }
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    font-weight: 900; color: var(--brown);
+    margin-bottom: 1rem; line-height: 1.1;
+  }
+  .cta-title em { font-style: italic; color: var(--amber); }
+  .cta-desc {
+    font-size: 1rem; color: var(--text-muted); line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+  .cta-actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+
+  /* ---- FOOTER ---- */
+  footer {
+    background: var(--brown);
+    padding: 4rem 3rem 2rem;
+    color: rgba(245,239,224,0.65);
+  }
+  .footer-grid {
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 3rem; margin-bottom: 3rem;
+  }
+  .footer-brand-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem; font-weight: 900;
+    color: var(--cream); margin-bottom: 0.75rem;
+  }
+  .footer-brand-name span { color: var(--amber-light); }
+  .footer-brand-desc { font-size: 0.875rem; line-height: 1.7; margin-bottom: 1.5rem; }
+  .footer-socials { display: flex; gap: 0.75rem; }
+  .social-btn {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid rgba(245,239,224,0.2);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--cream-dark); font-size: 0.85rem;
+    text-decoration: none; transition: all 0.2s;
+  }
+  .social-btn:hover { background: var(--amber); border-color: var(--amber); color: white; }
+  .footer-col-title {
+    font-size: 0.8rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--cream); margin-bottom: 1rem;
+  }
+  .footer-links { list-style: none; }
+  .footer-links li { margin-bottom: 0.6rem; }
+  .footer-links a {
+    font-size: 0.875rem; color: rgba(245,239,224,0.55);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--amber-light); }
+  .footer-bottom {
+    border-top: 1px solid rgba(245,239,224,0.1);
+    padding-top: 1.5rem;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 0.8rem; flex-wrap: wrap; gap: 0.5rem;
+  }
+
+  /* ---- MENU CARD ILLUSTRATIONS ---- */
+  .bg-coffee { background: linear-gradient(135deg, #3B1F0A 0%, #6B3A1F 100%); }
+  .bg-matcha { background: linear-gradient(135deg, #2D4A2A 0%, #4A7A44 100%); }
+  .bg-choco  { background: linear-gradient(135deg, #5C2A0A 0%, #9A5C2A 100%); }
+  .bg-milk   { background: linear-gradient(135deg, #C4956A 0%, #E8C4A0 100%); }
+  .bg-tea    { background: linear-gradient(135deg, #8A4A2A 0%, #C48A5A 100%); }
+  .bg-avo    { background: linear-gradient(135deg, #2D5A1A 0%, #5A9A3A 100%); }
+
+  /* ---- MOBILE ---- */
+  .hamburger { display: none; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hamburger {
+      display: block; background: none; border: none;
+      cursor: pointer; font-size: 1.3rem; color: var(--brown);
+    }
+    #hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; text-align: center; }
+    .hero-visual { display: none; }
+    .hero-stats { justify-content: center; }
+    .hero-actions { justify-content: center; }
+    .hero-desc { margin: 0 auto 2.5rem; }
+    #menu, #about, #testimonials, #location, #cta, footer { padding: 4rem 1.5rem; }
+    .about-inner, .location-inner { grid-template-columns: 1fr; }
+    .footer-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .footer-bottom { flex-direction: column; text-align: center; }
+    .about-visual { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Kedai Kopi <span>KULO</span></div>
+  <ul class="nav-links">
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#about">Tentang</a></li>
+    <li><a href="#testimonials">Ulasan</a></li>
+    <li><a href="#location">Lokasi</a></li>
+    <li><a href="#cta" class="nav-cta">Pesan Sekarang</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()">☰</button>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div style="position:relative; z-index:1;">
+    <div class="hero-badge">Freshly Brewed Daily</div>
+    <h1 class="hero-title">
+      Kopi <em>Nikmat,</em><br>Harga Bersahabat
+    </h1>
+    <p class="hero-desc">
+      Hadir dengan konsep <em>coffee-to-go</em> yang praktis, Kedai Kopi KULO menghadirkan cita rasa kopi premium dengan harga yang merakyat. Langsung, cepat, enak!
+    </p>
+    <div class="hero-actions">
+      <a href="#menu" class="btn-primary">Lihat Menu ✦</a>
+      <a href="#about" class="btn-outline">Tentang Kami</a>
+    </div>
+    <div class="hero-stats">
+      <div>
+        <span class="hero-stat-num">500+</span>
+        <span class="hero-stat-label">Outlet Indonesia</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">1Jt+</span>
+        <span class="hero-stat-label">Cangkir / Bulan</span>
+      </div>
+      <div>
+        <span class="hero-stat-num">4.8★</span>
+        <span class="hero-stat-label">Rating Pelanggan</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-cup-wrapper">
+      <svg class="hero-cup-svg" viewBox="0 0 200 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Cup -->
+        <path d="M35 60 L165 60 L148 180 C146 192 136 200 124 200 H76 C64 200 54 192 52 180 Z" fill="#F5EFE0" opacity="0.9"/>
+        <!-- Coffee inside -->
+        <path d="M40 85 L160 85 L145 175 C143 187 133 195 121 195 H79 C67 195 57 187 55 175 Z" fill="#6B3A1F"/>
+        <!-- Latte art -->
+        <ellipse cx="100" cy="130" rx="40" ry="30" fill="#A0613A" opacity="0.6"/>
+        <path d="M75 130 Q100 110 125 130" stroke="#C89060" stroke-width="2.5" fill="none" opacity="0.9"/>
+        <path d="M80 120 Q100 100 120 120" stroke="#C89060" stroke-width="2" fill="none" opacity="0.7"/>
+        <!-- Cup rim -->
+        <rect x="30" y="52" width="140" height="16" rx="8" fill="#EDE3CC"/>
+        <!-- Sleeve -->
+        <path d="M40 100 L160 100 L155 145 L45 145 Z" fill="#3B1F0A" opacity="0.5"/>
+        <text x="100" y="130" text-anchor="middle" fill="#F5EFE0" font-size="11" font-family="DM Sans, sans-serif" font-weight="600">KULO</text>
+        <!-- Steam -->
+        <path d="M75 45 Q80 35 75 25" stroke="#EDE3CC" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+        <path d="M100 40 Q105 28 100 16" stroke="#EDE3CC" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+        <path d="M125 45 Q130 35 125 25" stroke="#EDE3CC" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.6"/>
+      </svg>
+      <div class="floating-tag">☕ Kopi Kulo Signature</div>
+      <div class="floating-tag">🥑 Avocatto Favorit</div>
+      <div class="floating-tag">🏆 Best Seller 2024</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span class="marquee-item">Kopi Segar Setiap Hari</span>
+    <span class="marquee-item">Coffee To Go</span>
+    <span class="marquee-item">Arabika & Robusta</span>
+    <span class="marquee-item">500+ Outlet Seluruh Indonesia</span>
+    <span class="marquee-item">Harga Terjangkau</span>
+    <span class="marquee-item">Order via GoFood & GrabFood</span>
+  </div>
+  <div class="marquee-track marquee-track2" aria-hidden="true">
+    <span class="marquee-item">Kopi Segar Setiap Hari</span>
+    <span class="marquee-item">Coffee To Go</span>
+    <span class="marquee-item">Arabika & Robusta</span>
+    <span class="marquee-item">500+ Outlet Seluruh Indonesia</span>
+    <span class="marquee-item">Harga Terjangkau</span>
+    <span class="marquee-item">Order via GoFood & GrabFood</span>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="section-header">
+    <span class="section-eyebrow">Menu Kami</span>
+    <h2 class="section-title">Pilihan Minuman<br>Untuk Semua Suasana</h2>
+  </div>
+  <div class="menu-tabs">
+    <button class="tab-btn active" onclick="filterMenu('semua', this)">Semua</button>
+    <button class="tab-btn" onclick="filterMenu('kopi', this)">Kopi</button>
+    <button class="tab-btn" onclick="filterMenu('nonkopi', this)">Non-Kopi</button>
+    <button class="tab-btn" onclick="filterMenu('signature', this)">Signature</button>
+  </div>
+  <div class="menu-grid" id="menuGrid">
+    <!-- Cards injected by JS -->
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div>
+      <span class="section-eyebrow about-eyebrow">Tentang Kami</span>
+      <h2 class="about-title">Dari Secangkir Kopi,<br><em>Lahir Sebuah Gerakan</em></h2>
+      <p class="about-text">
+        Kedai Kopi KULO hadir sebagai pelopor konsep kopi-to-go di Indonesia. Kami percaya kopi berkualitas seharusnya bisa dinikmati siapa saja, kapan saja, tanpa perlu merogoh kocek dalam-dalam. Dengan biji kopi pilihan blend Arabika dan Robusta, setiap tegukan KULO adalah pengalaman yang tak terlupakan.
+      </p>
+      <div class="about-features">
+        <div class="about-feat">
+          <div class="feat-icon">🌱</div>
+          <div class="feat-text">
+            <strong>Biji Kopi Pilihan</strong>
+            <span>Blend Arabika & Robusta terbaik dari Nusantara</span>
+          </div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">⚡</div>
+          <div class="feat-text">
+            <strong>Cepat & Praktis</strong>
+            <span>Konsep to-go, siap dalam 2 menit</span>
+          </div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">💰</div>
+          <div class="feat-text">
+            <strong>Harga Merakyat</strong>
+            <span>Mulai dari Rp 15.000 per cup</span>
+          </div>
+        </div>
+        <div class="about-feat">
+          <div class="feat-icon">📍</div>
+          <div class="feat-text">
+            <strong>Ada di Mana-mana</strong>
+            <span>500+ outlet di seluruh Indonesia</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="about-visual">
+      <div class="about-img-card">
+        <div class="about-img-icon">☕</div>
+        <div class="about-img-label">House Blend<br>Arabika + Robusta</div>
+      </div>
+      <div class="about-img-card">
+        <div class="about-img-icon">🏆</div>
+        <div class="about-img-label">Best F&B Brand<br>2023</div>
+      </div>
+      <div class="about-img-card">
+        <div class="about-img-icon">🚀</div>
+        <div class="about-img-label">Fastest Growing<br>Coffee Chain</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="section-header">
+    <span class="section-eyebrow">Ulasan Pelanggan</span>
+    <h2 class="section-title">Apa Kata Mereka<br>Tentang KULO?</h2>
+  </div>
+  <div class="testi-grid">
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Kopi Kulo Signature jadi andalan saya setiap pagi. Rasanya konsisten, harganya terjangkau banget, dan packaging-nya kece. Bikin mood booster langsung!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">RA</div>
+        <div>
+          <div class="testi-name">Rizky Aditya</div>
+          <div class="testi-role">Mahasiswa, Jakarta</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Avocatto-nya the best! Belum pernah nemu kopi alpukat yang se-creamy ini dengan harga segitu. Tiap hari pasti beli deh, udah kayak kebutuhan pokok.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">DN</div>
+        <div>
+          <div class="testi-name">Dina Novitasari</div>
+          <div class="testi-role">Karyawan Swasta, Surabaya</div>
+        </div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-stars">★★★★☆</div>
+      <div class="testi-quote">"</div>
+      <p class="testi-text">Banyak pilihan menu, antrenya cepat, dan rasa nggak kalah sama coffee shop premium. Untuk harga segini, kualitasnya beyond expectation. Rekomen banget!</p>
+      <div class="testi-author">
+        <div class="testi-avatar">BK</div>
+        <div>
+          <div class="testi-name">Budi Kurniawan</div>
+          <div class="testi-role">Freelancer, Bandung</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCATION -->
+<section id="location">
+  <div class="location-inner">
+    <div>
+      <span class="section-eyebrow">Temukan Kami</span>
+      <h2 class="section-title" style="font-family:'Playfair Display',serif;font-size:clamp(1.8rem,3vw,2.5rem);font-weight:900;color:var(--brown);margin-bottom:2rem;line-height:1.1;">Outlet Terdekat<br>dari Kamu</h2>
+      <div class="loc-item">
+        <div class="loc-icon">📍</div>
+        <div>
+          <div class="loc-label">Alamat Utama</div>
+          <div class="loc-value">Jl. Sudirman No. 88, Jakarta Pusat<br>DKI Jakarta 10220</div>
+        </div>
+      </div>
+      <div class="loc-item">
+        <div class="loc-icon">🕐</div>
+        <div>
+          <div class="loc-label">Jam Operasional</div>
+          <div class="loc-value">Senin – Jumat: 07.00 – 22.00<br>Sabtu – Minggu: 08.00 – 23.00</div>
+        </div>
+      </div>
+      <div class="loc-item">
+        <div class="loc-icon">📞</div>
+        <div>
+          <div class="loc-label">Hubungi Kami</div>
+          <div class="loc-value">+62 811-2345-6789<br>info@kedaikopikulo.id</div>
+        </div>
+      </div>
+      <div class="loc-item">
+        <div class="loc-icon">🛵</div>
+        <div>
+          <div class="loc-label">Pesan Online</div>
+          <div class="loc-value">GoFood · GrabFood · ShopeeFood</div>
+        </div>
+      </div>
+    </div>
+    <div class="map-placeholder">
+      <div class="map-pin">📍</div>
+      <span>500+ Outlet Seluruh Indonesia</span>
+      <span style="font-size:0.78rem;margin-top:0.25rem;">Klik untuk temukan outlet terdekat</span>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-inner">
+    <span class="section-eyebrow">Yuk, Mulai!</span>
+    <h2 class="cta-title">Siap Rasakan<br><em>Kopi KULO</em> Hari Ini?</h2>
+    <p class="cta-desc">Order sekarang lewat aplikasi favoritmu atau datang langsung ke outlet terdekat. Kopi terbaik menunggu kamu!</p>
+    <div class="cta-actions">
+      <a href="#menu" class="btn-primary">Lihat Menu Lengkap</a>
+      <a href="#location" class="btn-outline">Cari Outlet Terdekat</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">Kedai Kopi <span>KULO</span></div>
+      <p class="footer-brand-desc">Pelopor konsep kopi-to-go di Indonesia. Kopi berkualitas, harga merakyat, ada di mana-mana.</p>
+      <div class="footer-socials">
+        <a href="#" class="social-btn">ig</a>
+        <a href="#" class="social-btn">tw</a>
+        <a href="#" class="social-btn">fb</a>
+        <a href="#" class="social-btn">yt</a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-col-title">Menu</div>
+      <ul class="footer-links">
+        <li><a href="#">Kopi Signature</a></li>
+        <li><a href="#">Avocatto</a></li>
+        <li><a href="#">Non-Kopi</a></li>
+        <li><a href="#">Seasonal Menu</a></li>
+        <li><a href="#">Bundle Deal</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Informasi</div>
+      <ul class="footer-links">
+        <li><a href="#">Tentang KULO</a></li>
+        <li><a href="#">Karir</a></li>
+        <li><a href="#">Franchise</a></li>
+        <li><a href="#">Blog</a></li>
+        <li><a href="#">Promo</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">Bantuan</div>
+      <ul class="footer-links">
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Kontak Kami</a></li>
+        <li><a href="#">Syarat & Ketentuan</a></li>
+        <li><a href="#">Kebijakan Privasi</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Kedai Kopi KULO. All rights reserved.</span>
+    <span>Made with ☕ in Indonesia</span>
+  </div>
+</footer>
+
+<script>
+const menuItems = [
+  { name: "Kopi KULO Signature", desc: "Blend Arabika & Robusta pilihan dengan susu segar. Cita rasa ikonik yang bikin ketagihan.", price: "Rp 18.000", badge: "bestseller", cat: "kopi signature", bg: "bg-coffee", icon: "☕" },
+  { name: "Avocatto", desc: "Perpaduan sempurna alpukat creamy dengan espresso shot. Minuman favorit semua kalangan.", price: "Rp 22.000", badge: "bestseller", cat: "nonkopi signature", bg: "bg-avo", icon: "🥑" },
+  { name: "Es Kopi Susu", desc: "Kopi susu klasik dengan rasio espresso dan susu yang pas. Seger dan nikmat.", price: "Rp 15.000", badge: null, cat: "kopi", bg: "bg-coffee", icon: "🥛" },
+  { name: "Matcha Latte", desc: "Matcha premium Jepang dengan susu oat. Pilihan sehat yang tetap lezat.", price: "Rp 19.000", badge: "new", cat: "nonkopi", bg: "bg-matcha", icon: "🍵" },
+  { name: "Choco Hazel", desc: "Coklat belgia dengan hazlenut syrup. Manis, creamy, dan bikin mood naik.", price: "Rp 20.000", badge: null, cat: "nonkopi", bg: "bg-choco", icon: "🍫" },
+  { name: "Brown Sugar Latte", desc: "Espresso dengan brown sugar caramel yang rich. Tren kekinian yang wajib dicoba.", price: "Rp 21.000", badge: "new", cat: "kopi signature", bg: "bg-milk", icon: "🍮" },
+  { name: "Teh Tarik KULO", desc: "Teh tarik khas Malaysia dengan twist lokal. Klasik, ringan, dan menyegarkan.", price: "Rp 14.000", badge: null, cat: "nonkopi", bg: "bg-tea", icon: "🧋" },
+  { name: "Double Shot Americano", desc: "Dua shot espresso dengan air mineral segar. Untuk kamu yang butuh boost ekstra.", price: "Rp 16.000", badge: null, cat: "kopi", bg: "bg-coffee", icon: "⚡" },
+];
+
+let activeCategory = 'semua';
+
+function renderMenu(cat) {
+  const grid = document.getElementById('menuGrid');
+  const filtered = cat === 'semua' ? menuItems : menuItems.filter(i => i.cat.includes(cat));
+  grid.innerHTML = filtered.map(item => `
+    <div class="menu-card">
+      <div class="menu-card-img ${item.bg}">
+        <span style="font-size:4rem">${item.icon}</span>
+      </div>
+      <div class="menu-card-body">
+        <div class="menu-card-name">${item.name}</div>
+        <div class="menu-card-desc">${item.desc}</div>
+        <div class="menu-card-footer">
+          <div class="menu-price">${item.price}</div>
+          ${item.badge ? `<span class="menu-badge badge-${item.badge}">${item.badge === 'bestseller' ? '🔥 Best Seller' : item.badge === 'new' ? '✨ Baru' : '🍂 Seasonal'}</span>` : ''}
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterMenu(cat, btn) {
+  activeCategory = cat;
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderMenu(cat);
+}
+
+function toggleMenu() {
+  const links = document.querySelector('.nav-links');
+  if (links.style.display === 'flex') {
+    links.style.display = 'none';
+  } else {
+    links.style.cssText = 'display:flex;flex-direction:column;position:absolute;top:100%;left:0;right:0;background:rgba(245,239,224,0.97);padding:1.5rem;gap:1.5rem;backdrop-filter:blur(12px);border-bottom:1px solid rgba(59,31,10,0.1);';
+  }
+}
+
+renderMenu('semua');
+
+// Nav scroll effect
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  if (window.scrollY > 50) {
+    nav.style.boxShadow = '0 4px 20px rgba(59,31,10,0.08)';
+  } else {
+    nav.style.boxShadow = 'none';
+  }
+});
+</script>
+
+</body>
+</html>
